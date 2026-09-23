@@ -1,0 +1,67 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Personal Website" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <script is:inline>
+      const setInitialTheme = () => {
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      };
+      setInitialTheme();
+    </script>
+  </head>
+  <body class="bg-stone-50 text-stone-900 dark:bg-stone-950 dark:text-stone-100 transition-colors duration-200 antialiased font-sans min-h-screen flex flex-col max-w-3xl mx-auto px-6 py-8">
+    
+    <!-- Navigation Header -->
+    <header class="flex justify-between items-center mb-16 pb-4 border-b border-stone-200 dark:border-stone-800">
+      <a href="/patrickkohn-com" class="text-xl font-bold tracking-tight hover:opacity-80">Patrick Kohn</a>
+      <nav class="flex items-center gap-6 text-sm font-medium">
+        <a href="/patrickkohn-com/" class="hover:text-stone-600 dark:hover:text-stone-400">Home</a>
+        <a href="/patrickkohn-com/projects" class="hover:text-stone-600 dark:hover:text-stone-400">Projects</a>
+        <a href="/patrickkohn-com/blog" class="hover:text-stone-600 dark:hover:text-stone-400">Blog</a>
+        
+        <!-- Dark Mode Toggle Button with Direct Onclick -->
+        <button 
+          id="theme-toggle" 
+          aria-label="Toggle theme" 
+          class="p-2 text-stone-500 hover:text-stone-900 dark:hover:text-stone-100 cursor-pointer"
+          onclick="
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+          "
+        >
+          <span class="dark:hidden">🌙</span>
+          <span class="hidden dark:inline">☀️</span>
+        </button>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 pt-6 border-t border-stone-200 dark:border-stone-800 text-xs text-stone-500 text-center">
+      © {new Date().getFullYear()} Patrick Kohn — Built with Astro
+    </footer>
+  </body>
+</html>

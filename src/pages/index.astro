@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const featuredProjects = (await getCollection('projects')).filter((p) => p.data.featured);
+const recentPosts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout title="Patrick Kohn — Home">
+  <!-- Hero Section -->
+  <section class="mb-16">
+    <h1 class="text-3xl font-extrabold tracking-tight mb-4 text-stone-900 dark:text-stone-100">
+      Hi, I'm Patrick Kohn 👋
+    </h1>
+    <p class="text-lg text-stone-600 dark:text-stone-400 leading-relaxed">
+      Welcome to my personal site. I share projects, writing, and notes here. Built with a focus on speed, clarity, and minimalist design.
+    </p>
+  </section>
+
+  <!-- Featured Projects Section -->
+  <section class="mb-16">
+    <div class="flex justify-between items-baseline mb-6">
+      <h2 class="text-xl font-bold tracking-tight">Featured Projects</h2>
+      <a href="/patrickkohn-com/projects" class="text-sm font-medium hover:underline text-stone-600 dark:hover:text-stone-300">View all →</a>
+    </div>
+    <div class="space-y-6">
+      {featuredProjects.map((project) => (
+        <div class="p-5 rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-100/50 dark:bg-stone-900/50">
+          <a href={project.data.link} target="_blank" class="text-lg font-semibold hover:underline">
+            {project.data.title}
+          </a>
+          <p class="text-stone-600 dark:text-stone-400 text-sm mt-1">{project.data.description}</p>
+          {project.data.tags && (
+            <div class="flex gap-2 mt-3">
+              {project.data.tags.map((tag) => (
+                <span class="text-xs px-2 py-0.5 rounded bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Recent Writing Section -->
+  <section>
+    <div class="flex justify-between items-baseline mb-6">
+      <h2 class="text-xl font-bold tracking-tight">Recent Posts</h2>
+      <a href="/patrickkohn-com/blog" class="text-sm font-medium hover:underline text-stone-600 dark:hover:text-stone-300">View all →</a>
+    </div>
+    <ul class="space-y-4">
+      {recentPosts.map((post) => (
+        <li class="flex justify-between items-baseline border-b border-stone-100 dark:border-stone-900 pb-3">
+          <a href={`/patrickkohn-com/blog/${post.id}`} class="font-medium hover:underline">
+            {post.data.title}
+          </a>
+          <time class="text-xs text-stone-500 font-mono">
+            {post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+          </time>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>

@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+---
+
+<BaseLayout title="Projects — Patrick Kohn">
+  <h1 class="text-3xl font-extrabold tracking-tight mb-4">Projects</h1>
+  <p class="text-stone-600 dark:text-stone-400 mb-8">A collection of stuff I've built and am working on.</p>
+
+  <div class="grid gap-6">
+    {projects.map((project) => (
+      <div class="p-6 rounded-lg border border-stone-200 dark:border-stone-800">
+        <a href={project.data.link} target="_blank" class="text-xl font-bold hover:underline">
+          {project.data.title}
+        </a>
+        <p class="text-stone-600 dark:text-stone-400 mt-2">{project.data.description}</p>
+        {project.data.tags && (
+          <div class="flex gap-2 mt-4">
+            {project.data.tags.map((tag) => (
+              <span class="text-xs px-2 py-1 rounded bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+</BaseLayout>
