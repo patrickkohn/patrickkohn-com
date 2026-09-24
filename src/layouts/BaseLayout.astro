@@ -7,6 +7,10 @@ interface Props {
 }
 
 const { title, description = "A journal of projects, writing, and notes by Patrick Kohn." } = Astro.props;
+const currentPath = Astro.url.pathname;
+const isHomePage = currentPath === '/patrickkohn-com' || currentPath === '/patrickkohn-com/';
+const isProjectsPage = currentPath.startsWith('/patrickkohn-com/projects');
+const isJournalPage = currentPath.startsWith('/patrickkohn-com/blog');
 ---
 
 <!DOCTYPE html>
@@ -32,22 +36,22 @@ const { title, description = "A journal of projects, writing, and notes by Patri
     
     <!-- Journal Masthead Header -->
     <header class="mb-16 text-center">
-      <a href="/patrickkohn-com" class="block">
-        <h1 class="text-4xl sm:text-5xl font-serif-heading font-normal tracking-tight text-stone-900 dark:text-stone-100 italic">
+      <div class="flex flex-col items-start gap-1 text-left sm:flex-row sm:items-end sm:justify-between sm:gap-4">
+        <h1 class="shrink-0 whitespace-nowrap text-4xl sm:text-5xl font-serif-heading font-normal tracking-tight text-stone-900 dark:text-stone-100 italic">
           Patrick Kohn
         </h1>
-      </a>
-      <p class="text-sm font-sans-ui text-stone-600 dark:text-stone-400 mt-2 tracking-wide">
-        Comedy Writing • Performing Arts
-      </p>
+        <p class="shrink-0 whitespace-nowrap text-sm font-sans-ui text-stone-600 dark:text-stone-400 tracking-wide sm:text-right">
+          Comedy Writing • Performance Art
+        </p>
+      </div>
 
       <!-- Navigation & Dark Mode Toggle -->
       <nav class="flex justify-center items-center gap-8 mt-8 text-sm font-sans-ui uppercase tracking-wider border-t border-b border-stone-300 dark:border-stone-800 py-3">
-        <a href="/patrickkohn-com/" class="hover:italic transition-all">Home</a>
+        <a href="/patrickkohn-com/" class:list={['transition-all', 'hover:underline', { underline: isHomePage }]} aria-current={isHomePage ? 'page' : undefined}>Home</a>
         <span class="text-stone-300 dark:text-stone-700">/</span>
-        <a href="/patrickkohn-com/projects" class="hover:italic transition-all">Projects</a>
+        <a href="/patrickkohn-com/projects" class:list={['transition-all', 'hover:underline', { underline: isProjectsPage }]} aria-current={isProjectsPage ? 'page' : undefined}>Projects</a>
         <span class="text-stone-300 dark:text-stone-700">/</span>
-        <a href="/patrickkohn-com/blog" class="hover:italic transition-all">Journal</a>
+        <a href="/patrickkohn-com/blog" class:list={['transition-all', 'hover:underline', { underline: isJournalPage }]} aria-current={isJournalPage ? 'page' : undefined}>Journal</a>
         <span class="text-stone-300 dark:text-stone-700">/</span>
         
         <button 
