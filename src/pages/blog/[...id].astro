@@ -15,15 +15,31 @@ const { Content } = await render(post);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="prose dark:prose-invert max-w-none">
-    <header class="mb-8 not-prose">
-      <time class="text-sm text-stone-500 font-mono">
+  <article>
+    <!-- Article Header -->
+    <header class="mb-12 text-center pb-8 border-b border-stone-300 dark:border-stone-800">
+      <time class="text-xs font-sans-ui uppercase tracking-widest text-stone-500">
         {post.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
       </time>
-      <h1 class="text-3xl font-extrabold tracking-tight mt-2">{post.data.title}</h1>
+      <h1 class="text-3xl sm:text-4xl font-serif-heading font-normal tracking-tight mt-3 mb-4 leading-tight">
+        {post.data.title}
+      </h1>
+      {post.data.description && (
+        <p class="text-lg italic text-stone-600 dark:text-stone-400 max-w-lg mx-auto">
+          {post.data.description}
+        </p>
+      )}
     </header>
-    <div class="mt-6 leading-relaxed">
+
+    <!-- Article Body -->
+    <div class="space-y-6 text-lg leading-relaxed text-stone-800 dark:text-stone-200">
       <Content />
     </div>
+
+    <!-- Article Footer -->
+    <footer class="mt-16 pt-8 border-t border-stone-300 dark:border-stone-800 flex justify-between items-center text-xs font-sans-ui uppercase tracking-wider text-stone-500">
+      <a href="/patrickkohn-com/blog" class="hover:underline">← Back to Archive</a>
+      <span>End of Entry</span>
+    </footer>
   </article>
 </BaseLayout>
