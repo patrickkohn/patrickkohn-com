@@ -1,27 +1,20 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-
-const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Blog — Patrick Kohn">
-  <h1 class="text-3xl font-extrabold tracking-tight mb-4">Blog</h1>
-  <p class="text-stone-600 dark:text-stone-400 mb-8">Thoughts, tutorials, and notes.</p>
+<BaseLayout title="Patrick Kohn">
+  <!-- Hero / Introduction -->
+  <section class="max-w-2xl">
+    <h1 class="text-3xl md:text-4xl font-serif font-normal text-stone-900 dark:text-stone-100 mb-6 leading-tight">
+      Welcome to the studio.
+    </h1>
+    <p class="text-lg text-stone-700 dark:text-stone-300 leading-relaxed mb-6 font-serif">
+      This is a digital press, lab, and open notebook for projects, performance notes, and written work.
+    </p>
+  </section>
 
-  <div class="space-y-6">
-    {posts.map((post) => (
-      <article class="flex flex-col gap-1 border-b border-stone-200 dark:border-stone-800 pb-6">
-        <time class="text-xs text-stone-500 font-mono">
-          {post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-        </time>
-        <a href={`/patrickkohn-com/blog/${post.id}`} class="text-xl font-bold hover:underline">
-          {post.data.title}
-        </a>
-        <p class="text-stone-600 dark:text-stone-400 text-sm mt-1">{post.data.description}</p>
-      </article>
-    ))}
-  </div>
+  <!-- Image Collage Placeholder (To be replaced with your collage) -->
+  <section class="my-16 border border-dashed border-stone-300 dark:border-stone-800 rounded-lg p-12 text-center text-stone-400 dark:text-stone-600 font-sans-ui text-sm">
+    <p class="italic">[ Image Collage Space ]</p>
+  </section>
 </BaseLayout>
