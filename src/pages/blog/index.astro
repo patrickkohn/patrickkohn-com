@@ -1,20 +1,37 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 ---
 
-<BaseLayout title="Patrick Kohn">
-  <!-- Hero / Introduction -->
+<BaseLayout title="Writing — Patrick Kohn">
   <section class="max-w-2xl">
-    <h1 class="text-3xl md:text-4xl font-serif font-normal text-stone-900 dark:text-stone-100 mb-6 leading-tight">
-      Welcome to the studio.
-    </h1>
-    <p class="text-lg text-stone-700 dark:text-stone-300 leading-relaxed mb-6 font-serif">
-      This is a digital press, lab, and open notebook for projects, performance notes, and written work.
+    <h1 class="text-3xl font-serif text-stone-900 dark:text-stone-100 mb-2">Writing</h1>
+    <p class="text-stone-600 dark:text-stone-400 font-serif italic mb-10">
+      Essays, notes, and commentary.
     </p>
-  </section>
 
-  <!-- Image Collage Placeholder (To be replaced with your collage) -->
-  <section class="my-16 border border-dashed border-stone-300 dark:border-stone-800 rounded-lg p-12 text-center text-stone-400 dark:text-stone-600 font-sans-ui text-sm">
-    <p class="italic">[ Image Collage Space ]</p>
+    <div class="space-y-8">
+      {posts.map((post) => (
+        <article class="border-b border-stone-200 dark:border-stone-800 pb-6">
+          <time class="text-xs font-sans-ui text-stone-500 dark:text-stone-400">
+            {post.data.pubDate.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            })}
+          </time>
+          <h2 class="text-xl font-serif text-stone-900 dark:text-stone-100 mt-1 mb-2 hover:underline">
+            <a href={`/patrickkohn-com/blog/${post.slug}/`}>{post.data.title}</a>
+          </h2>
+          <p class="text-stone-700 dark:text-stone-300 font-serif text-sm leading-relaxed">
+            {post.data.description}
+          </p>
+        </article>
+      ))}
+    </div>
   </section>
 </BaseLayout>
