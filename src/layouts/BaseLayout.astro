@@ -70,10 +70,20 @@ const { title, description = "A journal of projects, writing, and notes by Patri
       <slot />
     </main>
 
-    <!-- Footer -->
-    <footer class="mt-24 pt-8 border-t border-stone-300 dark:border-stone-800 text-xs font-sans-ui text-stone-500 dark:text-stone-400 text-center space-y-2">
-      <p>© {new Date().getFullYear()} Patrick Kohn. Set in Playfair Display & Newsreader.</p>
-      <p class="italic">Typeset with Astro & Tailwind. Typeset continuously.</p>
+   <!-- Footer with Creative Commons License -->
+    <footer class="mt-24 pt-8 border-t border-stone-300 dark:border-stone-800 text-xs font-sans-ui text-stone-500 dark:text-stone-400 text-center space-y-1">
+      <p>Patrick Kohn, {new Date().getFullYear()}</p>
+      <p>
+        Licensed under 
+        <a 
+          href="https://creativecommons.org/licenses/by-nc-sa/4.0/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="underline hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+        >
+          CC BY-NC-SA 4.0
+        </a>
+      </p>
     </footer>
   </body>
 </html>
