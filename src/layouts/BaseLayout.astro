@@ -37,9 +37,17 @@ const isJournalPage = currentPath.startsWith('/patrickkohn-com/blog');
     <!-- Journal Masthead Header -->
     <header class="mb-16 text-center">
       <div class="flex flex-col items-start gap-1 text-left sm:flex-row sm:items-end sm:justify-between sm:gap-4">
-        <h1 class="shrink-0 whitespace-nowrap text-4xl sm:text-5xl font-serif-heading font-normal tracking-tight text-stone-900 dark:text-stone-100 italic">
-          Patrick Kohn
-        </h1>
+        <div class="relative shrink-0">
+          <h1 class="whitespace-nowrap text-4xl sm:text-5xl font-serif-heading font-normal tracking-tight italic">
+            Patrick Kohn
+          </h1>
+          <img
+            src={`${import.meta.env.BASE_URL}/assets/title-underline.svg`}
+            alt=""
+            aria-hidden="true"
+            class="pointer-events-none absolute left-0 top-full -mt-1 h-auto w-full"
+          />
+        </div>
         <p class="shrink-0 whitespace-nowrap text-sm font-sans-ui text-stone-600 dark:text-stone-400 tracking-wide sm:text-right">
           Comedy Writing • Performance Art
         </p>
@@ -51,7 +59,7 @@ const isJournalPage = currentPath.startsWith('/patrickkohn-com/blog');
         <span class="text-stone-300 dark:text-stone-700">/</span>
         <a href="/patrickkohn-com/projects" class:list={['transition-all', 'hover:underline', { underline: isProjectsPage }]} aria-current={isProjectsPage ? 'page' : undefined}>Clips</a>
         <span class="text-stone-300 dark:text-stone-700">/</span>
-        <a href="/patrickkohn-com/blog" class:list={['transition-all', 'hover:underline', { underline: isJournalPage }]} aria-current={isJournalPage ? 'page' : undefined}>Journal</a>
+        <a href="/patrickkohn-com/blog" class:list={['transition-all', 'hover:underline', { underline: isJournalPage }]} aria-current={isJournalPage ? 'page' : undefined}>Blog</a>
         <span class="text-stone-300 dark:text-stone-700">/</span>
         
         <button 
