@@ -1,9 +1,9 @@
 ---
 title: "Personal Portfolio Website"
-description: "A fast, minimalist personal site built with Astro, Tailwind CSS, and MDX, deployed on GitHub Pages."
 link: "https://github.com/patrickkohn/patrickkohn-com"
-tags: ["Astro", "Tailwind CSS", "TypeScript"]
+tags: ["Astro"]
 featured: true
+order: 2
 ---
 
 This is my personal website where I showcase my recent work, write technical posts, and share notes.
