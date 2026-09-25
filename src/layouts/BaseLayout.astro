@@ -10,7 +10,7 @@ const { title, description = "A journal of projects, writing, and notes by Patri
 const currentPath = Astro.url.pathname;
 const isHomePage = currentPath === '/patrickkohn-com' || currentPath === '/patrickkohn-com/';
 const isProjectsPage = currentPath.startsWith('/patrickkohn-com/projects');
-const isJournalPage = currentPath.startsWith('/patrickkohn-com/blog');
+const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
 ---
 
 <!DOCTYPE html>
@@ -55,24 +55,24 @@ const isJournalPage = currentPath.startsWith('/patrickkohn-com/blog');
 
       <!-- Navigation & Dark Mode Toggle -->
       <nav class="flex justify-center items-center gap-8 mt-8 text-sm font-sans-ui uppercase tracking-wider border-t border-b border-stone-300 dark:border-stone-800 py-3">
-        <a href="/patrickkohn-com/" class:list={['transition-all', 'hover:underline', { underline: isHomePage }]} aria-current={isHomePage ? 'page' : undefined}>Home</a>
+        <a href="/patrickkohn-com/" class:list={['transition-all', 'hover:underline', { underline: isHomePage }]} aria-current={isHomePage ? 'page' : undefined}>About</a>
         <span class="text-stone-300 dark:text-stone-700">/</span>
         <a href="/patrickkohn-com/projects" class:list={['transition-all', 'hover:underline', { underline: isProjectsPage }]} aria-current={isProjectsPage ? 'page' : undefined}>Clips</a>
         <span class="text-stone-300 dark:text-stone-700">/</span>
-        <a href="/patrickkohn-com/blog" class:list={['transition-all', 'hover:underline', { underline: isJournalPage }]} aria-current={isJournalPage ? 'page' : undefined}>Blog</a>
+        <a href="/patrickkohn-com/contact" class:list={['transition-all', 'hover:underline', { underline: isContactPage }]} aria-current={isContactPage ? 'page' : undefined}>Contact</a>
         <span class="text-stone-300 dark:text-stone-700">/</span>
         
         <button 
           id="theme-toggle" 
           aria-label="Toggle theme" 
-          class="hover:opacity-75 cursor-pointer text-base leading-none"
+          class="relative inline-flex h-6 w-6 shrink-0 items-center justify-center hover:opacity-75 cursor-pointer text-base leading-none"
           onclick="
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
           "
         >
-          <span class="dark:hidden">☽</span>
-          <span class="hidden dark:inline">☼</span>
+          <span class="absolute dark:hidden">☽</span>
+          <span class="absolute hidden dark:inline">☼</span>
         </button>
       </nav>
     </header>
