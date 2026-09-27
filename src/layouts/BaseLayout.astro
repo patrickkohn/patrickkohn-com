@@ -23,15 +23,11 @@ const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`} />
     <link rel="alternate icon" type="image/x-icon" href={`${import.meta.env.BASE_URL}/favicon.ico`} />
     <script is:inline>
-      const setInitialTheme = () => {
-        const storedTheme = localStorage.getItem('theme');
-        if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-      };
-      setInitialTheme();
+      const storedTheme = localStorage.getItem('theme');
+      const themeMode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.themeMode = themeMode;
+      document.documentElement.classList.toggle('dark', themeMode === 'dark' || (themeMode === 'auto' && prefersDark));
     </script>
   </head>
   <body class="transition-colors duration-300 antialiased min-h-screen flex flex-col max-w-2xl mx-auto px-6 py-12 text-lg leading-relaxed">
@@ -51,32 +47,37 @@ const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
           />
         </div>
         <p class="shrink-0 whitespace-nowrap text-sm font-sans-ui text-stone-600 dark:text-stone-400 tracking-wide sm:text-right">
-          Comedy Writing • Performance Art
+          Comedy Writing • Performing Arts
         </p>
       </div>
 
-      <!-- Navigation & Dark Mode Toggle -->
-      <nav class="flex justify-center items-center gap-8 mt-8 text-sm font-sans-ui uppercase tracking-wider border-t border-b border-stone-300 dark:border-stone-800 py-3">
-        <a href="/patrickkohn-com/" class:list={['transition-all', 'hover:underline', { underline: isHomePage }]} aria-current={isHomePage ? 'page' : undefined}>About</a>
-        <span class="text-stone-300 dark:text-stone-700">/</span>
-        <a href="/patrickkohn-com/projects" class:list={['transition-all', 'hover:underline', { underline: isProjectsPage }]} aria-current={isProjectsPage ? 'page' : undefined}>Clips</a>
-        <span class="text-stone-300 dark:text-stone-700">/</span>
-        <a href="/patrickkohn-com/contact" class:list={['transition-all', 'hover:underline', { underline: isContactPage }]} aria-current={isContactPage ? 'page' : undefined}>Contact</a>
-        <span class="text-stone-300 dark:text-stone-700">/</span>
-        
-        <button 
-          id="theme-toggle" 
-          aria-label="Toggle theme" 
-          class="relative inline-flex h-6 w-6 shrink-0 items-center justify-center hover:opacity-75 cursor-pointer text-base leading-none"
-          onclick="
-            const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-          "
-        >
-          <span class="absolute dark:hidden">☽</span>
-          <span class="absolute hidden dark:inline">☼</span>
-        </button>
-      </nav>
+      <!-- Navigation -->
+      <div class="nav-scroll-shell" data-nav-scroll>
+        <nav aria-label="Main navigation" class="nav-scroll flex items-center justify-start gap-8 text-sm font-sans-ui font-light tracking-[0.06em] border-t border-b border-stone-300 dark:border-stone-800 py-3 sm:justify-center">
+          <a href="/patrickkohn-com/" class:list={['transition-all', 'hover:underline', { underline: isHomePage }]} aria-current={isHomePage ? 'page' : undefined}>About</a>
+          <span class="text-stone-300 dark:text-stone-700">/</span>
+          <a href="/patrickkohn-com/projects" class:list={['transition-all', 'hover:underline', { underline: isProjectsPage }]} aria-current={isProjectsPage ? 'page' : undefined}>Clips</a>
+          <span class="text-stone-300 dark:text-stone-700">/</span>
+          <a href="/patrickkohn-com/contact" class:list={['transition-all', 'hover:underline', { underline: isContactPage }]} aria-current={isContactPage ? 'page' : undefined}>Contact</a>
+        </nav>
+        <span class="nav-overflow-indicator nav-overflow-left" aria-hidden="true">&hellip;</span>
+        <span class="nav-overflow-indicator nav-overflow-right" aria-hidden="true">&hellip;</span>
+      </div>
+      <script is:inline>
+        const navScrollShell = document.querySelector('[data-nav-scroll]');
+        const navScroll = navScrollShell?.querySelector('.nav-scroll');
+
+        if (navScrollShell && navScroll) {
+          const updateNavOverflow = () => {
+            navScrollShell.dataset.overflowLeft = String(navScroll.scrollLeft > 0);
+            navScrollShell.dataset.overflowRight = String(navScroll.scrollLeft + navScroll.clientWidth < navScroll.scrollWidth - 1);
+          };
+
+          navScroll.addEventListener('scroll', updateNavOverflow, { passive: true });
+          window.addEventListener('resize', updateNavOverflow);
+          updateNavOverflow();
+        }
+      </script>
     </header>
 
     <!-- Main Content -->
@@ -97,6 +98,36 @@ const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
           CC BY-NC-SA 4.0
         </a>
       </p>
+      <div class="mt-3 flex items-center justify-center gap-2" role="group" aria-label="Color theme">
+        <span>Theme:</span>
+        <button type="button" data-theme-choice="light" aria-pressed="false" class="theme-choice">Light</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" data-theme-choice="dark" aria-pressed="false" class="theme-choice">Dark</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" data-theme-choice="auto" aria-pressed="false" class="theme-choice">Auto</button>
+      </div>
     </footer>
+    <script is:inline>
+      const themeChoices = document.querySelectorAll('[data-theme-choice]');
+      const colorSchemePreference = window.matchMedia('(prefers-color-scheme: dark)');
+      const setThemeMode = (mode) => {
+        document.documentElement.dataset.themeMode = mode;
+        document.documentElement.classList.toggle('dark', mode === 'dark' || (mode === 'auto' && colorSchemePreference.matches));
+        localStorage.setItem('theme', mode);
+        themeChoices.forEach((choice) => {
+          choice.setAttribute('aria-pressed', String(choice.dataset.themeChoice === mode));
+        });
+      };
+
+      themeChoices.forEach((choice) => {
+        choice.addEventListener('click', () => setThemeMode(choice.dataset.themeChoice));
+      });
+      colorSchemePreference.addEventListener('change', () => {
+        if (document.documentElement.dataset.themeMode === 'auto') {
+          document.documentElement.classList.toggle('dark', colorSchemePreference.matches);
+        }
+      });
+      setThemeMode(document.documentElement.dataset.themeMode || 'auto');
+    </script>
   </body>
 </html>
