@@ -89,14 +89,29 @@
 
 .binder-nav {
   position: relative;
+  z-index: 4;
   gap: 0.55rem;
   padding: 0.75rem 1.1rem 1.65rem;
+}
+
+@media (min-width: 640px) {
+  .binder-nav {
+    transform: translateX(-3rem);
+  }
+}
+
+@media (max-width: 639px) {
+  .binder-nav {
+    padding-left: 1.35rem;
+  }
 }
 
 .binder-tab {
   display: inline-flex;
   flex: 0 0 6rem;
   min-height: 2.5rem;
+  position: relative;
+  z-index: 2;
   align-items: center;
   justify-content: center;
   padding: 0.45rem 1.35rem 0.35rem;
@@ -134,18 +149,29 @@
   z-index: 1;
 }
 
+.binder-tab:focus-visible,
+.nav-overflow-indicator:focus-visible {
+  outline: 2px solid #292723;
+  outline-offset: 3px;
+}
+
+.dark .binder-tab:focus-visible,
+.dark .nav-overflow-indicator:focus-visible {
+  outline-color: #f4f0e8;
+}
+
 .binder-tab-about {
-  --binder-tab-color: #d6e6dd;
+  --binder-tab-color: #cbded3;
   background-color: var(--binder-tab-color);
 }
 
 .binder-tab-clips {
-  --binder-tab-color: #d9e0e9;
+  --binder-tab-color: #cdd7e5;
   background-color: var(--binder-tab-color);
 }
 
 .binder-tab-contact {
-  --binder-tab-color: #ebd4d4;
+  --binder-tab-color: #e3c9c9;
   background-color: var(--binder-tab-color);
 }
 
@@ -171,29 +197,45 @@
 
 .nav-overflow-indicator {
   position: absolute;
-  top: 1px;
-  bottom: 1px;
-  z-index: 1;
+  top: 0.75rem;
+  z-index: 5;
   display: none;
+  width: 1.5rem;
+  height: 2.5rem;
   align-items: center;
-  padding: 0 0.2rem;
-  background: #fdfbf7;
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  line-height: 1;
-  pointer-events: none;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #d6d3ce;
+  cursor: pointer;
+}
+
+.nav-overflow-indicator span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
 }
 
 .dark .nav-overflow-indicator {
-  background: #171614;
+  color: #45413c;
 }
 
 .nav-overflow-left {
-  left: 0;
+  left: -1.5rem;
+}
+
+.nav-overflow-left span {
+  transform: rotate(135deg);
 }
 
 .nav-overflow-right {
-  right: 0;
+  right: -1.5rem;
+}
+
+.nav-overflow-right span {
+  transform: rotate(-45deg);
 }
 
 .nav-scroll-shell[data-overflow-left='true'] .nav-overflow-left,

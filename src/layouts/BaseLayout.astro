@@ -33,7 +33,7 @@ const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
   <body class="transition-colors duration-300 antialiased min-h-screen flex flex-col max-w-2xl mx-auto px-6 py-12 text-lg leading-relaxed">
     
     <!-- Journal Masthead Header -->
-    <header class="mb-16 text-center">
+    <header class="mb-12 text-center">
       <div class="flex flex-col items-start gap-1 text-left sm:flex-row sm:items-end sm:justify-between sm:gap-4">
         <div class="relative shrink-0">
           <h1 class="whitespace-nowrap text-4xl sm:text-5xl font-serif-heading font-normal tracking-tight italic">
@@ -67,19 +67,38 @@ const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
             <span>Contact</span>
           </a>
         </nav>
-        <span class="nav-overflow-indicator nav-overflow-left" aria-hidden="true">&hellip;</span>
-        <span class="nav-overflow-indicator nav-overflow-right" aria-hidden="true">&hellip;</span>
+        <button type="button" class="nav-overflow-indicator nav-overflow-left" aria-label="Scroll navigation left">
+          <span aria-hidden="true"></span>
+        </button>
+        <button type="button" class="nav-overflow-indicator nav-overflow-right" aria-label="Scroll navigation right">
+          <span aria-hidden="true"></span>
+        </button>
       </div>
       <script is:inline>
         const navScrollShell = document.querySelector('[data-nav-scroll]');
         const navScroll = navScrollShell?.querySelector('.nav-scroll');
 
         if (navScrollShell && navScroll) {
+          const overflowThreshold = 20;
+          const scrollAmount = () => {
+            const tab = navScroll.querySelector('.binder-tab');
+            const gap = Number.parseFloat(getComputedStyle(navScroll).columnGap) || 0;
+            return (tab?.getBoundingClientRect().width || 96) + gap;
+          };
           const updateNavOverflow = () => {
-            navScrollShell.dataset.overflowLeft = String(navScroll.scrollLeft > 0);
-            navScrollShell.dataset.overflowRight = String(navScroll.scrollLeft + navScroll.clientWidth < navScroll.scrollWidth - 1);
+            const scrollLeft = navScroll.scrollLeft;
+            navScrollShell.dataset.overflowLeft = String(navScroll.scrollLeft > overflowThreshold);
+            navScrollShell.dataset.overflowRight = String(scrollLeft + navScroll.clientWidth < navScroll.scrollWidth - overflowThreshold);
           };
 
+          navScrollShell.querySelector('.nav-overflow-left')?.addEventListener('click', () => {
+            navScroll.scrollBy({ left: -scrollAmount(), behavior: 'auto' });
+            updateNavOverflow();
+          });
+          navScrollShell.querySelector('.nav-overflow-right')?.addEventListener('click', () => {
+            navScroll.scrollBy({ left: scrollAmount(), behavior: 'auto' });
+            updateNavOverflow();
+          });
           navScroll.addEventListener('scroll', updateNavOverflow, { passive: true });
           window.addEventListener('resize', updateNavOverflow);
           updateNavOverflow();
@@ -93,7 +112,7 @@ const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
     </main>
 
    <!-- Footer with Creative Commons License -->
-    <footer class="mt-24 pt-8 border-t border-stone-300 dark:border-stone-800 text-xs font-sans-ui text-stone-500 dark:text-stone-400 text-center">
+    <footer class="mt-24 pt-8 border-t-2 border-stone-300 dark:border-stone-800 text-xs font-sans-ui text-stone-500 dark:text-stone-400 text-center">
       <p>
         {new Date().getFullYear()} Patrick Kohn &bull; Licensed under{' '}
         <a 
@@ -105,7 +124,7 @@ const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
           CC BY-NC-SA 4.0
         </a>
       </p>
-      <div class="mt-2 flex items-center justify-center gap-2" role="group" aria-label="Color theme">
+      <div class="mt-2 flex items-center justify-center gap-1.5" role="group" aria-label="Color theme">
         <span>Theme:</span>
         <button type="button" data-theme-choice="light" aria-pressed="false" class="theme-choice">Light</button>
         <span aria-hidden="true">|</span>
