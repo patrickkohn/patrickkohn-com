@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+width="1000"
+height="500"
+viewBox="0 0 1000 500">
+<path
+fill="#ff0000"
+d="
+M200 80
+H800
+V230
+C800 285 820 330 850 330
+A80 80 0 0 1 840 490
+H160
+A80 80 0 0 1 150 330
+C180 330 200 285 200 230
+Z
+"/>
+</svg>
