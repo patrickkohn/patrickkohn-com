@@ -8,19 +8,20 @@ const posts = (await getCollection('blog')).sort(
 ---
 
 <BaseLayout title="Writing">
-  <section class="max-w-2xl">
+  <section class="-mt-1 max-w-2xl">
     <div class="space-y-8">
       {posts.map((post) => (
-        <article class="border-b border-stone-200 dark:border-stone-800 pb-6">
+        <article class="border-b border-stone-200 dark:border-stone-800 pb-6 last:border-b-0">
           <time class="text-xs font-sans-ui text-stone-500 dark:text-stone-400">
             {post.data.pubDate.toLocaleDateString('en-US', {
+              timeZone: 'UTC',
               year: 'numeric',
               month: 'short',
               day: 'numeric',
             })}
           </time>
           <h2 class="text-xl font-serif text-stone-900 dark:text-stone-100 mt-1 mb-2 hover:underline">
-            <a href={`/patrickkohn-com/blog/${post.slug}/`}>{post.data.title}</a>
+            <a href={`/patrickkohn-com/blog/${post.id}/`}>{post.data.title}</a>
           </h2>
           <p class="text-stone-700 dark:text-stone-300 font-serif text-sm leading-relaxed">
             {post.data.description}

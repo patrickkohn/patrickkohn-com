@@ -10,6 +10,7 @@ const { title, description = "A journal of projects, writing, and notes by Patri
 const currentPath = Astro.url.pathname;
 const isHomePage = currentPath === '/patrickkohn-com' || currentPath === '/patrickkohn-com/';
 const isProjectsPage = currentPath.startsWith('/patrickkohn-com/projects');
+const isBlogPage = currentPath.startsWith('/patrickkohn-com/blog');
 const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
 ---
 
@@ -62,6 +63,10 @@ const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
             {isProjectsPage && <span class="binder-tab-art" aria-hidden="true"></span>}
             <span>Clips</span>
           </a>
+          <a href="/patrickkohn-com/blog" class="binder-tab binder-tab-blog" aria-current={isBlogPage ? 'page' : undefined}>
+            {isBlogPage && <span class="binder-tab-art" aria-hidden="true"></span>}
+            <span>Writing</span>
+          </a>
           <a href="/patrickkohn-com/contact" class="binder-tab binder-tab-contact" aria-current={isContactPage ? 'page' : undefined}>
             {isContactPage && <span class="binder-tab-art" aria-hidden="true"></span>}
             <span>Contact</span>
@@ -112,7 +117,7 @@ const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
     </main>
 
    <!-- Footer with Creative Commons License -->
-    <footer class="mt-24 pt-8 border-t-2 border-stone-300 dark:border-stone-800 text-xs font-sans-ui text-stone-500 dark:text-stone-400 text-center">
+    <footer class="mt-24 pt-5 border-t-2 border-stone-300 dark:border-stone-800 text-xs font-sans-ui text-stone-500 dark:text-stone-400 text-center">
       <p>
         {new Date().getFullYear()} Patrick Kohn &bull; Licensed under{' '}
         <a 

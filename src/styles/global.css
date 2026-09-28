@@ -170,6 +170,11 @@
   background-color: var(--binder-tab-color);
 }
 
+.binder-tab-blog {
+  --binder-tab-color: #d3cee4;
+  background-color: var(--binder-tab-color);
+}
+
 .binder-tab-contact {
   --binder-tab-color: #e3c9c9;
   background-color: var(--binder-tab-color);
@@ -185,6 +190,10 @@
 
 .dark .binder-tab-clips {
   --binder-tab-color: #263f64;
+}
+
+.dark .binder-tab-blog {
+  --binder-tab-color: #4d4269;
 }
 
 .dark .binder-tab-contact {
