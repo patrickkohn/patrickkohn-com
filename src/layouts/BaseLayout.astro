@@ -10,8 +10,8 @@ const { title, description = "A journal of projects, writing, and notes by Patri
 const baseUrl = import.meta.env.BASE_URL;
 const currentPath = Astro.url.pathname;
 const isHomePage = currentPath === baseUrl || currentPath === baseUrl.slice(0, -1);
-const isProjectsPage = currentPath.startsWith(`${baseUrl}projects`);
-const isBlogPage = currentPath.startsWith(`${baseUrl}blog`);
+const isProjectsPage = currentPath.startsWith(`${baseUrl}clips`) || currentPath.startsWith(`${baseUrl}projects`);
+const isBlogPage = currentPath.startsWith(`${baseUrl}writing`) || currentPath.startsWith(`${baseUrl}blog`);
 const isContactPage = currentPath.startsWith(`${baseUrl}contact`);
 ---
 
@@ -60,11 +60,11 @@ const isContactPage = currentPath.startsWith(`${baseUrl}contact`);
             {isHomePage && <span class="binder-tab-art" aria-hidden="true"></span>}
             <span>About</span>
           </a>
-          <a href={`${baseUrl}projects`} class="binder-tab binder-tab-clips" aria-current={isProjectsPage ? 'page' : undefined}>
+          <a href={`${baseUrl}clips`} class="binder-tab binder-tab-clips" aria-current={isProjectsPage ? 'page' : undefined}>
             {isProjectsPage && <span class="binder-tab-art" aria-hidden="true"></span>}
             <span>Clips</span>
           </a>
-          <a href={`${baseUrl}blog`} class="binder-tab binder-tab-blog" aria-current={isBlogPage ? 'page' : undefined}>
+          <a href={`${baseUrl}writing`} class="binder-tab binder-tab-blog" aria-current={isBlogPage ? 'page' : undefined}>
             {isBlogPage && <span class="binder-tab-art" aria-hidden="true"></span>}
             <span>Writing</span>
           </a>
