@@ -28,6 +28,19 @@
   .font-sans-ui {
     font-family: var(--font-sans);
   }
+
+  main a {
+    text-decoration: underline;
+    transition: color 150ms ease;
+  }
+
+  main a:hover {
+    color: color-mix(in srgb, currentColor 85%, white);
+  }
+
+  .dark main a:hover {
+    color: color-mix(in srgb, currentColor 85%, black);
+  }
 }
 
 .border-double-custom {

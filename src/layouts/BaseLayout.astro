@@ -86,6 +86,7 @@ const isContactPage = currentPath.startsWith(`${baseUrl}contact`);
 
         if (navScrollShell && navScroll) {
           const overflowThreshold = 20;
+          const navScrollStorageKey = 'main-nav-scroll-left';
           const scrollAmount = () => {
             const tab = navScroll.querySelector('.binder-tab');
             const gap = Number.parseFloat(getComputedStyle(navScroll).columnGap) || 0;
@@ -95,6 +96,18 @@ const isContactPage = currentPath.startsWith(`${baseUrl}contact`);
             const scrollLeft = navScroll.scrollLeft;
             navScrollShell.dataset.overflowLeft = String(navScroll.scrollLeft > overflowThreshold);
             navScrollShell.dataset.overflowRight = String(scrollLeft + navScroll.clientWidth < navScroll.scrollWidth - overflowThreshold);
+          };
+          const revealActiveTab = () => {
+            const activeTab = navScroll.querySelector('.binder-tab[aria-current="page"]');
+            if (!activeTab) return;
+
+            const navBounds = navScroll.getBoundingClientRect();
+            const tabBounds = activeTab.getBoundingClientRect();
+            if (tabBounds.left < navBounds.left) {
+              navScroll.scrollLeft += tabBounds.left - navBounds.left;
+            } else if (tabBounds.right > navBounds.right) {
+              navScroll.scrollLeft += tabBounds.right - navBounds.right;
+            }
           };
 
           navScrollShell.querySelector('.nav-overflow-left')?.addEventListener('click', () => {
@@ -107,6 +120,14 @@ const isContactPage = currentPath.startsWith(`${baseUrl}contact`);
           });
           navScroll.addEventListener('scroll', updateNavOverflow, { passive: true });
           window.addEventListener('resize', updateNavOverflow);
+          const savedScrollLeft = sessionStorage.getItem(navScrollStorageKey);
+          if (savedScrollLeft !== null) {
+            navScroll.scrollLeft = Number(savedScrollLeft);
+          }
+          revealActiveTab();
+          navScroll.addEventListener('scroll', () => {
+            sessionStorage.setItem(navScrollStorageKey, String(navScroll.scrollLeft));
+          }, { passive: true });
           updateNavOverflow();
         }
       </script>
