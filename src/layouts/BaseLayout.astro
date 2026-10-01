@@ -7,11 +7,12 @@ interface Props {
 }
 
 const { title, description = "A journal of projects, writing, and notes by Patrick Kohn." } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL;
 const currentPath = Astro.url.pathname;
-const isHomePage = currentPath === '/patrickkohn-com' || currentPath === '/patrickkohn-com/';
-const isProjectsPage = currentPath.startsWith('/patrickkohn-com/projects');
-const isBlogPage = currentPath.startsWith('/patrickkohn-com/blog');
-const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
+const isHomePage = currentPath === baseUrl || currentPath === baseUrl.slice(0, -1);
+const isProjectsPage = currentPath.startsWith(`${baseUrl}projects`);
+const isBlogPage = currentPath.startsWith(`${baseUrl}blog`);
+const isContactPage = currentPath.startsWith(`${baseUrl}contact`);
 ---
 
 <!DOCTYPE html>
@@ -21,8 +22,8 @@ const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`} />
-    <link rel="alternate icon" type="image/x-icon" href={`${import.meta.env.BASE_URL}/favicon.ico`} />
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}favicon.svg`} />
+    <link rel="alternate icon" type="image/x-icon" href={`${baseUrl}favicon.ico`} />
     <script is:inline>
       const storedTheme = localStorage.getItem('theme');
       const themeMode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
@@ -41,7 +42,7 @@ const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
             Patrick Kohn
           </h1>
           <img
-            src={`${import.meta.env.BASE_URL}/assets/title-underline.svg`}
+            src={`${baseUrl}assets/title-underline.svg`}
             alt=""
             aria-hidden="true"
             class="pointer-events-none absolute left-0 top-full -mt-1 h-auto w-full"
@@ -54,20 +55,20 @@ const isContactPage = currentPath.startsWith('/patrickkohn-com/contact');
 
       <!-- Navigation -->
       <div class="nav-scroll-shell" data-nav-scroll>
-        <nav aria-label="Main navigation" class="nav-scroll binder-nav flex items-end justify-start text-sm font-sans-ui tracking-wider sm:justify-center" style={`--binder-tab-mask: url('${import.meta.env.BASE_URL}/assets/binder-tab.svg')`}>
-          <a href="/patrickkohn-com/" class="binder-tab binder-tab-about" aria-current={isHomePage ? 'page' : undefined}>
+        <nav aria-label="Main navigation" class="nav-scroll binder-nav flex items-end justify-start text-sm font-sans-ui tracking-wider sm:justify-center" style={`--binder-tab-mask: url('${baseUrl}assets/binder-tab.svg')`}>
+          <a href={baseUrl} class="binder-tab binder-tab-about" aria-current={isHomePage ? 'page' : undefined}>
             {isHomePage && <span class="binder-tab-art" aria-hidden="true"></span>}
             <span>About</span>
           </a>
-          <a href="/patrickkohn-com/projects" class="binder-tab binder-tab-clips" aria-current={isProjectsPage ? 'page' : undefined}>
+          <a href={`${baseUrl}projects`} class="binder-tab binder-tab-clips" aria-current={isProjectsPage ? 'page' : undefined}>
             {isProjectsPage && <span class="binder-tab-art" aria-hidden="true"></span>}
             <span>Clips</span>
           </a>
-          <a href="/patrickkohn-com/blog" class="binder-tab binder-tab-blog" aria-current={isBlogPage ? 'page' : undefined}>
+          <a href={`${baseUrl}blog`} class="binder-tab binder-tab-blog" aria-current={isBlogPage ? 'page' : undefined}>
             {isBlogPage && <span class="binder-tab-art" aria-hidden="true"></span>}
             <span>Writing</span>
           </a>
-          <a href="/patrickkohn-com/contact" class="binder-tab binder-tab-contact" aria-current={isContactPage ? 'page' : undefined}>
+          <a href={`${baseUrl}contact`} class="binder-tab binder-tab-contact" aria-current={isContactPage ? 'page' : undefined}>
             {isContactPage && <span class="binder-tab-art" aria-hidden="true"></span>}
             <span>Contact</span>
           </a>
