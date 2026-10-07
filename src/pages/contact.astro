@@ -3,9 +3,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Contact">
-  <section class="max-w-2xl">
-    <p class="font-serif text-lg leading-relaxed">
-      Email me at <a href="mailto:hello@patrickkohn.com">hello@patrickkohn.com</a> or message me on Instagram @<a href="https://www.instagram.com/patrickkohnonline/" target="_blank" rel="noopener noreferrer">patrickkohnonline</a>
-    </p>
-  </section>
+  <div class="grid gap-8">
+    <div>
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+        <a href="mailto:hello@patrickkohn.com" class="min-w-0 text-xl font-serif-heading font-normal">
+          hello@patrickkohn.com
+        </a>
+        <div class="flex flex-wrap translate-y-0 md:translate-y-0.5 gap-x-3 gap-y-1">
+          <span class="text-sm italic text-stone-500 dark:text-stone-400">Email</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+        <a href="https://www.instagram.com/patrickkohnonline/" target="_blank" rel="noopener noreferrer" class="min-w-0 text-xl font-serif-heading font-normal">
+          <span class="inline-block no-underline">@</span>patrickkohnonline
+        </a>
+        <div class="flex flex-wrap translate-y-0 md:translate-y-0.5 gap-x-3 gap-y-1">
+          <span class="text-sm italic text-stone-500 dark:text-stone-400">Instagram</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </BaseLayout>

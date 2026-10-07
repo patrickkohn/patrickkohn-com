@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
   return posts.map((post) => ({
     params: { id: post.id },
     props: { post },
@@ -17,7 +17,7 @@ const baseUrl = import.meta.env.BASE_URL;
 
 <BaseLayout title={post.data.title} description={post.data.description}>
   <article>
-    <header class="mb-8 text-left pb-8">
+    <header class="mb-4 text-left pb-6">
       <a href={`${baseUrl}writing`} class="mb-6 block w-fit text-left text-sm font-sans-ui text-stone-500 dark:text-stone-400 no-underline transition-colors hover:text-stone-900 dark:hover:text-stone-100">
         <span aria-hidden="true">← </span><span class="underline">Writing</span>
       </a>
@@ -28,7 +28,7 @@ const baseUrl = import.meta.env.BASE_URL;
         {post.data.title}
       </h1>
       {post.data.description && (
-        <p class="text-lg italic text-stone-600 dark:text-stone-400 max-w-lg">
+        <p class="text-lg italic tracking-[0.01em] text-stone-600 dark:text-stone-400 max-w-lg">
           {post.data.description}
         </p>
       )}
@@ -38,7 +38,7 @@ const baseUrl = import.meta.env.BASE_URL;
       <Content />
     </div>
 
-    <footer class="mt-12 pt-8 flex justify-between items-center text-xs font-sans-ui text-stone-500">
+    <footer class="mt-8 pt-6 flex justify-between items-center text-xs font-sans-ui text-stone-500">
       <a href={`${baseUrl}writing`} class="text-sm dark:text-stone-400 no-underline transition-colors hover:text-stone-900 dark:hover:text-stone-100">
         <span aria-hidden="true">← </span><span class="underline">Writing</span>
       </a>
