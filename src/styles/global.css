@@ -174,22 +174,22 @@
 }
 
 .binder-tab-about {
-  --binder-tab-color: #cbded3;
+  --binder-tab-color: #bed6c7;
   background-color: var(--binder-tab-color);
 }
 
 .binder-tab-clips {
-  --binder-tab-color: #cdd7e5;
+  --binder-tab-color: #bdcede;
   background-color: var(--binder-tab-color);
 }
 
 .binder-tab-blog {
-  --binder-tab-color: #d3cee4;
+  --binder-tab-color: #c6c3da;
   background-color: var(--binder-tab-color);
 }
 
 .binder-tab-contact {
-  --binder-tab-color: #e3c9c9;
+  --binder-tab-color: #d8bfbc;
   background-color: var(--binder-tab-color);
 }
 
@@ -206,7 +206,7 @@
 }
 
 .dark .binder-tab-blog {
-  --binder-tab-color: #4d4269;
+  --binder-tab-color: #4d416a;
 }
 
 .dark .binder-tab-contact {
